@@ -215,6 +215,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\AW_Chardonnay.png" />
+    <Content Include="Images\BonterraOrganicChardonnay.png" />
+    <Content Include="Images\DarkHorse_CS2015.png" />
+    <Content Include="Images\ManoirSancerre.png" />
+    <Content Include="Images\MontesAlphaMalbec.png" />
+    <Content Include="Images\MontesMerlot.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -424,6 +430,9 @@
       <DependentUpon>Grapes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Wine.cs" />
+    <Compile Include="Models\WineDbContext.cs" />
+    <Compile Include="Models\WineDbInitialiser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions.aspx.cs">
       <DependentUpon>Regions.aspx</DependentUpon>

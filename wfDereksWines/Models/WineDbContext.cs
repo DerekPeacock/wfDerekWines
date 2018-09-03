@@ -9,5 +9,6 @@ namespace wfDereksWines.Models
         }
 
         public DbSet<Wine> Wines { get; set; }
+        public DbSet<CartItem> ShoppingCartItems { get; set; }
     }
 }

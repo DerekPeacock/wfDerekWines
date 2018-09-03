@@ -13,7 +13,7 @@
                         <p class="card-text">
                             <%# Item.Description %>
                         </p>
-                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                        <a href="/AddToCart.aspx?WineID=<%#:Item.WineID %>" class="btn btn-primary">Add to Cart</a>
                 </section>
             </ItemTemplate>
         </asp:FormView>

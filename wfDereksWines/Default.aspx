@@ -14,23 +14,20 @@
             runat="server">
             <ItemTemplate>
                 <section class="col-lg card">
-                    <article class="">
-                        <div class="card-body">
-                            <img src="/Images/<%#Item.ImagePath %>" style="width:100px" />
-                            <h3 class="card-title">
-                                <a href="WineDetails.aspx?WineID=<%#:Item.WineID %>">
-                                    <%# Item.Producer %>
-                                    <%# Item.Name %>
-                                </a>
-                            </h3>
-                            <p class="card-text">
-                                <%# Item.Description %>
-                            </p>
-                            <a href="#" class="btn btn-primary">View Details</a>
-                            <br />
-                            <br />
-                        </div>
-
+                    <article class="card-body">
+                        <img src="/Images/<%#Item.ImagePath %>" style="width:100px" />
+                        <h3 class="card-title">
+                            <a href="WineDetails.aspx?WineID=<%#:Item.WineID %>">
+                                <%# Item.Producer %>
+                                <%# Item.Name %>
+                            </a>
+                        </h3>
+                        <p class="card-text">
+                            <%# Item.Description %>
+                        </p>
+                        <a href="/WineDetails.aspx?WineID=<%#:Item.WineID %>" class="btn btn-primary">View Details</a>
+                        <br />
+                        <br />
                     </article>
                 </section>
             </ItemTemplate>

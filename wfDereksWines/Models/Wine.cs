@@ -36,7 +36,6 @@ namespace wfDereksWines.Models
         [Range(1,5)]
         public double Rating { get; set; }
 
-
         public decimal Price { get; set; }
 
         [Range(0,100)]

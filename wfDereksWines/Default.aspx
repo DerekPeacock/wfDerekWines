@@ -9,12 +9,42 @@
     <section>
         <asp:ListView ID="WinesListView" 
             ItemType="wfDereksWines.Models.Wine" 
-            SelectMethod="GetWines"
+            SelectMethod="GetAllWines"
+            GroupItemCount ="3"
             runat="server">
             <ItemTemplate>
-                <%# Item.Producer %>
-                <%# Item.Name %>
+                <section class="col-lg card">
+                    <article class="">
+                        <div class="card-body">
+                            <img src="/Images/<%#Item.ImagePath %>" style="width:100px" />
+                            <h3 class="card-title">
+                                <a href="WineDetails.aspx?WineID=<%#:Item.WineID %>">
+                                    <%# Item.Producer %>
+                                    <%# Item.Name %>
+                                </a>
+                            </h3>
+                            <p class="card-text">
+                                <%# Item.Description %>
+                            </p>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                            <br />
+                            <br />
+                        </div>
+
+                    </article>
+                </section>
             </ItemTemplate>
+            <LayoutTemplate>
+                  <div>
+                      <asp:PlaceHolder ID="groupPlaceholder" runat="server"></asp:PlaceHolder>
+                  </div>
+                </div>
+            </LayoutTemplate>
+            <GroupTemplate>
+                <section class="row">
+                    <asp:PlaceHolder id="itemPlaceholder" runat="server"></asp:PlaceHolder>
+                </section>
+            </GroupTemplate>
         </asp:ListView>
     </section>
 

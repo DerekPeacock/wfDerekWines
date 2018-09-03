@@ -243,6 +243,7 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="WineDetails.aspx" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Grapes.aspx" />
     <Content Include="Images\GrapesLogo.png" />
@@ -462,6 +463,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WineDetails.aspx.cs">
+      <DependentUpon>WineDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WineDetails.aspx.designer.cs">
+      <DependentUpon>WineDetails.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -47,7 +47,7 @@ namespace wfDereksWines.BusinessLogic
             _db.SaveChanges();
         }
 
-        private string GetCartId()
+        public String GetCartId()
         {
             if (HttpContext.Current.Session[CartSessionKey] == null)
             {
@@ -80,6 +80,136 @@ namespace wfDereksWines.BusinessLogic
                 _db.Dispose();
                 _db = null;
             }
+        }
+
+        public decimal GetTotal()
+        {
+            ShoppingCartId = GetCartId();
+
+            // Multiply product price by quantity of that product to get        
+            // the current price for each of those products in the cart.  
+            // Sum all product price totals to get the cart total.   
+            decimal? total = decimal.Zero;
+            total = (decimal?)(from cartItems in _db.ShoppingCartItems
+                               where cartItems.CartId == ShoppingCartId
+                               select (int?)cartItems.Quantity *
+                               cartItems.Wine.Price).Sum();
+            return total ?? decimal.Zero;
+        }
+        public ShoppingCartActions GetCart(HttpContext context)
+        {
+            using (var cart = new ShoppingCartActions())
+            {
+                cart.ShoppingCartId = cart.GetCartId();
+                return cart;
+            }
+        }
+
+        public void UpdateShoppingCartDatabase(String cartId, ShoppingCartUpdates[] CartItemUpdates)
+        {
+            using (var db = new WineDbContext())
+            {
+                try
+                {
+                    int CartItemCount = CartItemUpdates.Count();
+                    List<CartItem> myCart = GetCartItems();
+                    foreach (var cartItem in myCart)
+                    {
+                        // Iterate through all rows within shopping cart list
+                        for (int i = 0; i < CartItemCount; i++)
+                        {
+                            if (cartItem.Wine.WineID == CartItemUpdates[i].WineId)
+                            {
+                                if (CartItemUpdates[i].PurchaseQuantity < 1 || CartItemUpdates[i].RemoveItem == true)
+                                {
+                                    RemoveItem(cartId, cartItem.WineId);
+                                }
+                                else
+                                {
+                                    UpdateItem(cartId, cartItem.WineId, CartItemUpdates[i].PurchaseQuantity);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception exp)
+                {
+                    throw new Exception("ERROR: Unable to Update Cart Database - " + exp.Message.ToString(), exp);
+                }
+            }
+        }
+
+        public void RemoveItem(string removeCartID, int removeProductID)
+        {
+            using (var _db = new WineDbContext())
+            {
+                try
+                {
+                    var myItem = (from c in _db.ShoppingCartItems where c.CartId == removeCartID && c.Wine.WineID == removeProductID select c).FirstOrDefault();
+                    if (myItem != null)
+                    {
+                        // Remove Item.
+                        _db.ShoppingCartItems.Remove(myItem);
+                        _db.SaveChanges();
+                    }
+                }
+                catch (Exception exp)
+                {
+                    throw new Exception("ERROR: Unable to Remove Cart Item - " + exp.Message.ToString(), exp);
+                }
+            }
+        }
+
+        public void UpdateItem(string updateCartID, int updateProductID, int quantity)
+        {
+            using (var _db = new Models.WineDbContext())
+            {
+                try
+                {
+                    var myItem = (from c in _db.ShoppingCartItems where c.CartId == updateCartID && c.Wine.WineID == updateProductID select c).FirstOrDefault();
+                    if (myItem != null)
+                    {
+                        myItem.Quantity = quantity;
+                        _db.SaveChanges();
+                    }
+                }
+                catch (Exception exp)
+                {
+                    throw new Exception("ERROR: Unable to Update Cart Item - " + exp.Message.ToString(), exp);
+                }
+            }
+        }
+
+        public void EmptyCart()
+        {
+            ShoppingCartId = GetCartId();
+            var cartItems = _db.ShoppingCartItems.Where(
+                c => c.CartId == ShoppingCartId);
+            foreach (var cartItem in cartItems)
+            {
+                _db.ShoppingCartItems.Remove(cartItem);
+            }
+            // Save changes.             
+            _db.SaveChanges();
+        }
+
+        public int GetCount()
+        {
+            ShoppingCartId = GetCartId();
+
+            // Get the count of each item in the cart and sum them up          
+            int? count = (from cartItems in _db.ShoppingCartItems
+                          where cartItems.CartId == ShoppingCartId
+                          select (int?)cartItems.Quantity).Sum();
+            // Return 0 if all entries are null         
+            return count ?? 0;
+        }
+
+        public struct ShoppingCartUpdates
+        {
+            public int WineId;
+            public int PurchaseQuantity;
+            public bool RemoveItem;
         }
     }
 }

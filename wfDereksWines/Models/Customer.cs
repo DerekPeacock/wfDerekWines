@@ -21,6 +21,7 @@ namespace wfDereksWines.Models
         [Required(ErrorMessage = "Last Name is required")]
         [DisplayName("Last Name")]
         [StringLength(30)]
+
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Address is required")]

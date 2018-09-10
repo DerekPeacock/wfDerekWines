@@ -14,17 +14,18 @@ namespace wfDereksWines.Models
         public int CustomerId { get; set; }
 
         public System.DateTime OrderDate { get; set; }
-
         [ScaffoldColumn(false)]
+
         public decimal Total { get; set; }
-
         [ScaffoldColumn(false)]
+
         public string PaymentTransactionId { get; set; }
-
         [ScaffoldColumn(false)]
+
         public bool HasBeenShipped { get; set; }
 
         public virtual Customer Customer { get; set; }
+
         public virtual List<OrderItem> OrderItems { get; set; }
     }
 }

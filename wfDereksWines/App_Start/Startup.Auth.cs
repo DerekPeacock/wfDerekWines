@@ -59,11 +59,11 @@ namespace wfDereksWines
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "1007598772818-2glrgdnb38vdi0taou461e5qe1a686ae.apps.googleusercontent.com",
+                ClientSecret = "JcpRgPrdw3lCZa3FUxEGBJI9"
+            });
         }
     }
 }

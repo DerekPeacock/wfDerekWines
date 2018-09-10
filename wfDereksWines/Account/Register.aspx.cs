@@ -5,6 +5,7 @@ using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
+using wfDereksWines.BusinessLogic;
 using wfDereksWines.Models;
 
 namespace wfDereksWines.Account
@@ -25,6 +26,13 @@ namespace wfDereksWines.Account
                 //manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
 
                 signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
+
+                using (ShoppingCartActions usersShoppingCart = new ShoppingCartActions())
+                {
+                    String cartID = usersShoppingCart.GetCartId();
+                    usersShoppingCart.MigrateCart(cartID, Email.Text);
+                }
+
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             }
             else 

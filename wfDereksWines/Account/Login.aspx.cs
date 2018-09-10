@@ -4,7 +4,7 @@ using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
-using wfDereksWines.Models;
+using wfDereksWines.BusinessLogic;
 
 namespace wfDereksWines.Account
 {
@@ -38,17 +38,24 @@ namespace wfDereksWines.Account
                 switch (result)
                 {
                     case SignInStatus.Success:
+
+                        ShoppingCartActions usersShoppingCart = new ShoppingCartActions();
+                        String cartID = usersShoppingCart.GetCartId();
+                        usersShoppingCart.MigrateCart(cartID, Email.Text);
+
                         IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                         break;
+
                     case SignInStatus.LockedOut:
                         Response.Redirect("/Account/Lockout");
                         break;
+
                     case SignInStatus.RequiresVerification:
                         Response.Redirect(String.Format("/Account/TwoFactorAuthenticationSignIn?ReturnUrl={0}&RememberMe={1}", 
                                                         Request.QueryString["ReturnUrl"],
-                                                        RememberMe.Checked),
-                                          true);
+                                                        RememberMe.Checked),true);
                         break;
+
                     case SignInStatus.Failure:
                     default:
                         FailureText.Text = "Invalid login attempt";
